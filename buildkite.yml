@@ -1,0 +1,7 @@
+steps:
+  - label: "Waiting missing dep"
+    command: "echo pass"
+    depends_on:
+      - "coming-soon"
+  - label: ":pipeline: again"
+    command: "buildkite-agent pipeline upload buildkite-2.yml"
