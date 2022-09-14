@@ -1,0 +1,79 @@
+steps:
+  - group: "All"
+    steps:
+    - command: "echo hi"
+      label: "pass"
+
+    # Jobs that have weird failure conditions
+
+    - command: "echo fail; exit 7"
+      label: "hard fail"
+    - command: "echo soft fail; exit 7"
+      label: "soft fail"
+      soft_fail: true
+    - command: "echo bye; exit 7"
+      label: "cancel hard"
+      agents:
+        queue: unknown
+    - command: "echo bye; exit 7"
+      label: "cancel soft"
+      agents:
+        queue: unknown
+      soft_fail: true
+    - command: "./sleep-exit-zero.sh"
+      label: "cancel zero"
+      key: cancel-zero
+    - command: "echo sleeping; sleep 3600"
+      label: "timeout hard"
+      timeout: 1
+    - command: "echo sleeping; sleep 3600"
+      label: "timeout soft"
+      timeout: 1
+      soft_fail: true
+    - command: "./sleep-exit-zero.sh"
+      label: "timeout zero"
+      timeout: 1
+      key: timeout-zero
+    - command: "echo sleeping; sleep 3600"
+      label: "timeout retry"
+      timeout: 1
+      key: timeout-retry
+      retry:
+        automatic:
+          exit_status: "*"
+          limit: 1
+    - command: "echo should not run"
+      label: "expire hard"
+      key: expire-hard
+      agents:
+        queue: unknown
+    - command: "echo should not run"
+      label: "expire soft"
+      key: expire-soft
+      agents:
+        queue: unknown
+      soft_fail: true
+    - command: "echo should not run"
+      label: "expire parallel"
+      key: expire-parallel
+      parallelism: 20
+      agents:
+        queue: unknown
+
+    # Jobs that depend on steps above
+
+    - command: "echo hi"
+      depends_on: cancel-zero
+      label: "depends cancel zero"
+    - command: "echo hi"
+      depends_on: timeout-zero
+      label: "depends timeout zero"
+    - command: "echo hi"
+      depends_on: expire-hard
+      label: "depends hard"
+    - command: "echo hi"
+      depends_on: expire-soft
+      label: "depends soft"
+    - command: "echo hi"
+      depends_on: timeout-retry
+      label: "depends timeout retry"
