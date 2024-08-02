@@ -1,3 +1,9 @@
 steps:
-  - command: "sleep 30; true"
-    label: "Pass slowly :turtle:"
+- group: "Group 1"
+  steps:
+  - command: "false"
+    label: "Fails"
+    retry:
+      automatic:
+      - exit_status: -1
+        limit: 3
