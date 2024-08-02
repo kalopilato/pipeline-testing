@@ -1,0 +1,3 @@
+steps:
+  - command: "sleep 30; true"
+    label: "Pass slowly :turtle:"
