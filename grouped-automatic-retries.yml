@@ -2,7 +2,7 @@ steps:
 - group: "Group 1"
   steps:
   - command: |
-      if [[ -n "$$BUILDKITE_RETRY_COUNT" && "$$BUILDKITE_RETRY_COUNT" -gt 0 ]]; then
+      if [[ -n "$$BUILDKITE_RETRY_COUNT" && "$$BUILDKITE_RETRY_COUNT" -gt 1 ]]; then
         echo "Retry detected, passing the step."
         exit 0
       else
