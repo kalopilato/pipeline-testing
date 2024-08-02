@@ -7,7 +7,7 @@ steps:
         exit 0
       else
         sleep 20
-        pkill -f buildkite-agent
+        exit 1
       fi
     label: "Fails the passes"
     retry:
