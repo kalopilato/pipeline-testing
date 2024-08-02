@@ -6,7 +6,7 @@ steps:
         echo "Pass"
         exit 0
       else
-        echo "Fail" && pkill -f buildkite-agent
+        echo "Fail" && sudo pkill -f buildkite-agent
         sleep 300
       fi
     label: "Fails but eventually passes"
