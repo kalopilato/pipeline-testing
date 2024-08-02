@@ -6,11 +6,15 @@ steps:
         echo "Retry detected, passing the step."
         exit 0
       else
-        sleep 30
-        exit 1
+        sleep 20
+        pkill -f buildkite-agent
       fi
-    label: "Fails"
+    label: "Fails the passes"
     retry:
       automatic:
+      - exit_status: -1
+        limit: 3
       - exit_status: 1
+        limit: 3
+      - exit_status: 255
         limit: 3
