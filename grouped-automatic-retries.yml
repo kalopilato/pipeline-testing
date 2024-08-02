@@ -3,13 +3,14 @@ steps:
   steps:
   - command: |
       if [[ -n "$$BUILDKITE_RETRY_COUNT" && "$$BUILDKITE_RETRY_COUNT" -gt 1 ]]; then
-        echo "Retry detected, passing the step."
+        echo "Pass"
         exit 0
       else
         sleep 20
+        echo "Fail"
         exit 1
       fi
-    label: "Fails the passes"
+    label: "Fails but eventually passes"
     retry:
       automatic:
       - exit_status: -1
@@ -18,3 +19,6 @@ steps:
         limit: 3
       - exit_status: 255
         limit: 3
+
+- command: "sleep 20; true"
+  label: "Pass slowly"
