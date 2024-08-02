@@ -1,7 +1,14 @@
 steps:
 - group: "Group 1"
   steps:
-  - command: "false"
+  - command: |
+      if [[ -n "$$BUILDKITE_RETRY_COUNT" && "$$BUILDKITE_RETRY_COUNT" -gt 0 ]]; then
+        echo "Retry detected, passing the step."
+        exit 0
+      else
+        sleep 30
+        exit 1
+      fi
     label: "Fails"
     retry:
       automatic:
