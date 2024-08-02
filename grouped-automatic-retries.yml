@@ -19,6 +19,3 @@ steps:
         limit: 3
       - exit_status: 255
         limit: 3
-
-- command: "sleep 20; true"
-  label: "Pass slowly"
