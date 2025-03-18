@@ -5,6 +5,3 @@ steps:
     block: "Click here"
     prompt: "Click 'OK'"
     blocked_state: "failed"
-notify:
-  - github_commit_status:
-      context: "custom-context"
